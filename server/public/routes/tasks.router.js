@@ -27,9 +27,6 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
   const taskToAdd = req.body;
-  console.log(`In server post route with`, taskToAdd);
-  console.log(`okay, now is ${taskToAdd.task} a thing?`);
-
   const taskQuery = `INSERT INTO "Tasks" ("task" , "notes" , "complete") VALUES ($1, $2, $3);`;
   const queryArray = [taskToAdd.task, taskToAdd.notes, taskToAdd.complete];
   pool
