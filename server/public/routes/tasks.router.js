@@ -41,4 +41,34 @@ router.post('/', (req, res) => {
     });
 });
 
+router.put('/:id', (req, res) => {
+  const taskId = req.params.id;
+  const taskData = req.body;
+  const taskQuery = `UPDATE "tasks" SET "complete" = $1 WHERE "id" = $2;`;
+  pool
+    .query(taskQuery, [taskData.complete, taskId])
+    .then((dbResponse) => {
+      res.sendStatus(200);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.sendStatus(500);
+    });
+});
+
+router.delete('/:id', (req, res) => {
+  const taskId = req.params.id;
+  const taskQuery = `DELETE FROM "Tasks" WHERE id=$1;`;
+  const queryArrayData = [taskId];
+  pool
+    .query(taskQuery, queryArrayData)
+    .then((dbResponse) => {
+      res.sendStatus(200);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.sendStatus(500);
+    });
+});
+
 module.exports = router;
