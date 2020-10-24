@@ -26,11 +26,14 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  console.log(`In /tasks with`, req.body);
   const taskToAdd = req.body;
+  console.log(`In server post route with`, taskToAdd);
+  console.log(`okay, now is ${taskToAdd.task} a thing?`);
+
   const taskQuery = `INSERT INTO "Tasks" ("task" , "notes" , "complete") VALUES ($1, $2, $3);`;
+  const queryArray = [taskToAdd.task, taskToAdd.notes, taskToAdd.complete];
   pool
-    .query(taskQuery, [taskToAdd.task, taskToAdd.notes, taskToAdd.complete])
+    .query(taskQuery, queryArray)
     .then((responseFromDatabase) => {
       console.log(responseFromDatabase);
       res.sendStatus(201);
