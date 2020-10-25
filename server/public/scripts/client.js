@@ -3,14 +3,14 @@ $(document).ready(onReady);
 function onReady() {
   $('.btn-submit').on('click', submitTask);
   $('.task-Table').on('click', '.btn-delete', deleteHandler);
-  $('.task-Table').on('click', '.test', test);
+  $('.task-Table').on('click', '.checkBox', isComplete);
   getTask();
 }
 
 function submitTask() {
   const task = $('.task-input').val();
   const notes = $('.note-input').val();
-  const complete = false;
+  let complete = false;
   const taskObject = {
     task,
     notes,
@@ -30,25 +30,20 @@ function taskRender(listOfTasks) {
     taskTable.append(`<tr>
     <td>${task.task}</td>
     <td>${task.notes}</td>
-    <td><input type="checkbox" class="test" data-test="${task.complete}"></td>
+    <td><input type="checkbox" class="checkBox" data-complete="${task.complete}"></td>
     <td><button class="btn-delete" data-id="${task.id}">Delete</button></td>
     </tr>`);
   }
 }
 
+function isComplete() {
+  $('.checkBox').val($('.checkBox').is(':checked'));
+  if 
+}
+
 function deleteHandler() {
   const taskId = $(this).data('id');
   deleteTask(taskId);
-}
-
-function test() {
-  const testing = $(this).data('test');
-  updateTask(testing);
-}
-
-function updateTask(testing) {
-  console.log(testing);
-  testing = true;
 }
 
 //api calls
@@ -92,4 +87,11 @@ function deleteTask(taskId) {
       console.log(err);
       alert('oh crap');
     });
+}
+
+function putTask(taskComplete) {
+  $.ajax({
+    method: 'PUT',
+    url: `/tasks/${taskComplete}`,
+  });
 }
