@@ -30,15 +30,15 @@ function taskRender(listOfTasks) {
       taskTable.append(`<tr class="completeCheck">
     <td>${task.task}</td>
     <td>${task.notes}</td>
-    <td><input type="checkbox" checked="true" class="checkBox" data-id="${task.id}"></td>
-    <td><button class="btn-delete" data-id="${task.id}">Delete</button></td>
+    <td>Done!</td>
+    <td><button class="btn-delete btn btn-danger" data-id="${task.id}">Delete</button></td>
     </tr>`);
     } else {
       taskTable.append(`<tr>
     <td>${task.task}</td>
     <td>${task.notes}</td>
-    <td><input type="checkbox" class="checkBox" data-id="${task.id}"></td>
-    <td><button class="btn-delete" data-id="${task.id}">Delete</button></td>
+    <td><input type="checkbox" class="checkBox col" data-id="${task.id}"></td>
+    <td><button class="btn-delete btn btn-danger" data-id="${task.id}">Delete</button></td>
     </tr>`);
     }
   }

@@ -1,3 +1,15 @@
 .completeCheck {
-  background-color: green;
+  background-color: rgb(93, 161, 250);
+}
+
+header {
+  background-color: #333b3f;
+  text-align: center;
+  color: white;
+}
+
+.mx {
+  text-align: center;
+  display: inline;
+  padding: 300px;
 }
