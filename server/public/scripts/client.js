@@ -3,7 +3,7 @@ $(document).ready(onReady);
 function onReady() {
   $('.btn-submit').on('click', submitTask);
   $('.task-Table').on('click', '.btn-delete', deleteHandler);
-  $('.task-Table').on('click', '.checkBox', isComplete);
+  $('.task-Table').on('click', '.checkBox', putHandler);
   getTask();
 }
 
@@ -26,24 +26,44 @@ function taskRender(listOfTasks) {
   const tasksLoop = listOfTasks;
   taskTable.empty();
   for (let task of tasksLoop) {
+    let done = task.complete;
+    let checkBox = '';
+    if (done === false) {
+      checkBox = `<input type="checkbox" class="checkBox" data-id="${task.id}">`;
+    }
+
+    // if (done) {
+    //   done = false;
+    // } else {
+    //   done = true;
+    // }
+
+    if (done === true) {
+      colorChanger(done);
+    }
+
     //need to hook checkbox to task.complete property
     taskTable.append(`<tr>
     <td>${task.task}</td>
     <td>${task.notes}</td>
-    <td><input type="checkbox" class="checkBox" data-complete="${task.complete}"></td>
+    <td><input type="checkbox" class="checkBox" data-id="${task.id}"></td>
     <td><button class="btn-delete" data-id="${task.id}">Delete</button></td>
     </tr>`);
   }
 }
 
-function isComplete() {
-  $('.checkBox').val($('.checkBox').is(':checked'));
-  if 
+function colorChanger(done) {
+  $(done).addClass('.myClass');
 }
 
 function deleteHandler() {
   const taskId = $(this).data('id');
   deleteTask(taskId);
+}
+
+function putHandler() {
+  const taskId = $(this).data('id');
+  putTask(taskId);
 }
 
 //api calls
@@ -89,9 +109,16 @@ function deleteTask(taskId) {
     });
 }
 
-function putTask(taskComplete) {
+function putTask(taskId) {
   $.ajax({
     method: 'PUT',
-    url: `/tasks/${taskComplete}`,
-  });
+    url: `/tasks/${taskId}`,
+  })
+    .then((response) => {
+      getTask();
+    })
+    .catch(function (err) {
+      console.log(err);
+      alert('Something wrong in put request');
+    });
 }
