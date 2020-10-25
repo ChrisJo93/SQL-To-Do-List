@@ -3,6 +3,7 @@ $(document).ready(onReady);
 function onReady() {
   $('.btn-submit').on('click', submitTask);
   $('.task-Table').on('click', '.btn-delete', deleteHandler);
+  $('.task-Table').on('click', '.test', test);
   getTask();
 }
 
@@ -29,7 +30,7 @@ function taskRender(listOfTasks) {
     taskTable.append(`<tr>
     <td>${task.task}</td>
     <td>${task.notes}</td>
-    <td><input type="checkbox"></td>
+    <td><input type="checkbox" class="test" data-test="${task.complete}"></td>
     <td><button class="btn-delete" data-id="${task.id}">Delete</button></td>
     </tr>`);
   }
@@ -38,6 +39,16 @@ function taskRender(listOfTasks) {
 function deleteHandler() {
   const taskId = $(this).data('id');
   deleteTask(taskId);
+}
+
+function test() {
+  const testing = $(this).data('test');
+  updateTask(testing);
+}
+
+function updateTask(testing) {
+  console.log(testing);
+  testing = true;
 }
 
 //api calls
@@ -79,6 +90,6 @@ function deleteTask(taskId) {
     })
     .catch((err) => {
       console.log(err);
-      alert('oh fuck');
+      alert('oh crap');
     });
 }
